@@ -3,3 +3,4 @@
 *.DEPLOYED
 
 /font/node_modules
+/.idea

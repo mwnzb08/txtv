@@ -5,6 +5,8 @@ go 1.15
 require (
 	github.com/ajg/form v1.5.1 // indirect
 	github.com/fasthttp-contrib/websocket v0.0.0-20160511215533-1f3b11f56072 // indirect
+	github.com/go-sql-driver/mysql v1.6.0
+	github.com/go-xorm/xorm v0.7.9
 	github.com/google/go-querystring v1.0.0 // indirect
 	github.com/imkira/go-interpol v1.1.0 // indirect
 	github.com/iris-contrib/jade v1.1.4 // indirect
@@ -35,4 +37,6 @@ require (
 	google.golang.org/protobuf v1.25.0 // indirect
 	gopkg.in/ini.v1 v1.57.0 // indirect
 	gopkg.in/yaml.v3 v3.0.0-20200615113413-eeeca48fe776 // indirect
+	xorm.io/core v0.7.2-0.20190928055935-90aeac8d08eb
+	xorm.io/xorm v1.0.7 // indirect
 )

@@ -4,10 +4,17 @@ import (
 	"fmt"
 	"github.com/kataras/iris/v12/context"
 	"github.com/kataras/iris/v12/sessions"
+	"main/config"
+	"main/domain"
 )
+
+func init () {
+	fmt.Println("----------------> login.go read successful")
+}
 
 type LoginController struct {
 	Session *sessions.Session
+	Ctx context.Context
 }
 
 func (c *LoginController) Get() string {
@@ -16,8 +23,17 @@ func (c *LoginController) Get() string {
 		loginUser)
 }
 
-func (c *LoginController) GetLogin(ctx context.Context) string {
-	str := ctx.URLParam("name")
-	return str
+func (c *LoginController) PostLogin() interface{} {
+	model := make([]domain.User,0)
+	param := &domain.User{}
+	params := make(map[string]interface{})
+	if err :=c.Ctx.ReadJSON(param); err != nil {
+		fmt.Println("ReadJson has error " + err.Error())
+	}
+	params["name"] = param.Name
+	params["pwd"] = param.Pwd
+	result := config.SelectDomain(&model, []string{"dpid,pwd"}, params)
+	fmt.Println(result)
+	return result
 }
 

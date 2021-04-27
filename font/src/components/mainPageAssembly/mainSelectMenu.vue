@@ -193,10 +193,10 @@
           <template v-slot:head>userLogin</template>
           <template v-slot:body>
             <div>
-              userName<input v-model="selectEntity.userName">
+              userName<input v-model="selectEntity.name">
             </div>
             <div>
-            password<input v-model="selectEntity.userPassword">
+            password<input v-model="selectEntity.pwd">
             </div>
             <button @click="login">login</button>
           </template>
@@ -350,7 +350,8 @@ export default {
       else this.doSetTimeOut200ms(false)
     },
     login () {
-      this.$http({ url: '', method: 'POST', data: JSON.stringify(this.selectEntity) }).then((res) => {
+      this.$http.post('/api/login', this.selectEntity).then((res) => {
+        alert(JSON.stringify(res.data))
       })
     }
   },

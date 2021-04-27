@@ -14,5 +14,5 @@ func main() {
 	sys := mvc.New(app.Party("/"))
 	sys.Register(sess.Start)
 	sys.Handle(&controllers.LoginController{})
-	app.Run(iris.Addr(":8081"))
+	app.Run(iris.Addr(":8024"))
 }

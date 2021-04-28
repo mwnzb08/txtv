@@ -22,18 +22,11 @@ func (c *LoginController) Get() string {
 	return fmt.Sprintf("%d visit from my current session in seconds of server's up-time",
 		loginUser)
 }
-
+// user login controller
 func (c *LoginController) PostLogin() interface{} {
+	params := config.GetJson(c.Ctx) // return map[string]interface{}
 	model := make([]domain.User,0)
-	param := &domain.User{}
-	params := make(map[string]interface{})
-	if err :=c.Ctx.ReadJSON(param); err != nil {
-		fmt.Println("ReadJson has error " + err.Error())
-	}
-	params["name"] = param.Name
-	params["pwd"] = param.Pwd
 	result := config.SelectDomain(&model, []string{"dpid,pwd"}, params)
-	fmt.Println(result)
 	return result
 }
 

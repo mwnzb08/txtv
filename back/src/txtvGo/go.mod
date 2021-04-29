@@ -35,7 +35,7 @@ require (
 	github.com/yudai/pp v2.0.1+incompatible // indirect
 	golang.org/x/time v0.0.0-20200630173020-3af7569d3a1e // indirect
 	google.golang.org/protobuf v1.25.0 // indirect
-	gopkg.in/ini.v1 v1.57.0 // indirect
+	gopkg.in/ini.v1 v1.57.0
 	gopkg.in/yaml.v3 v3.0.0-20200615113413-eeeca48fe776 // indirect
 	xorm.io/core v0.7.2-0.20190928055935-90aeac8d08eb
 	xorm.io/xorm v1.0.7 // indirect

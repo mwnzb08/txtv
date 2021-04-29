@@ -5,6 +5,7 @@ import (
 	"fmt"
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/go-xorm/xorm"
+	"gopkg.in/ini.v1"
 	"reflect"
 	"strings"
 	"time"
@@ -14,15 +15,19 @@ import (
 func init () {
 	fmt.Println("----------------> sql.go read successful")
 	ConnectDB()
-	//if err:=sqlEngine.Sync2(new(tableStruct)); err !=nil {
-	//	fmt.Println("mysql table fail")
-	//}
 }
 
 var sqlEngine *xorm.Engine
 
 func ConnectDB () {
-	sqlEngine, _ = xorm.NewEngine("mysql", "root:123456@tcp(127.0.0.1:3306)/helloworld?charset=utf8")
+	cfg,err := ini.Load("config.ini")
+	if err != nil {
+		fmt.Println("config.ini Read Error" + err.Error())
+	}
+	databaseType := cfg.Section("database").Key("name").String()
+	dataUrl := cfg.Section("database").Key("url").String()
+	fmt.Println(databaseType,dataUrl)
+	sqlEngine, _ = xorm.NewEngine(databaseType, dataUrl)
 	sqlEngine.SetMaxIdleConns(50)
 	sqlEngine.SetMaxOpenConns(10)
 	sqlEngine.SetMapper(core.GonicMapper{})
@@ -48,6 +53,7 @@ func SelectDomain(model interface{}, columns []string, params map[string]interfa
 		case "sort_desc": sqlString.Desc(value.(string))
 		case "sort_asc": sqlString.Asc(value.(string))
 		case "limit": sqlString.Limit(int(value.(float64)))
+		case "sort": sqlString.OrderBy(value.(string))
 		default: {
 			build.WriteString(key)
 			build.WriteString("=?")

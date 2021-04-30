@@ -32,7 +32,7 @@ func ConnectDB () {
 	sqlEngine.SetMaxOpenConns(10)
 	sqlEngine.SetMapper(core.GonicMapper{})
 	sqlEngine.ShowSQL(true)
-	sqlEngine.SetConnMaxLifetime(time.Second * 10)
+	sqlEngine.SetConnMaxLifetime(time.Second * 30)
 	if err := sqlEngine.Ping(); err !=nil {
 		fmt.Println("mysql connecting fail")
 		return
@@ -40,7 +40,7 @@ func ConnectDB () {
 	fmt.Println("mysql connecting successful")
 }
 // left to right is "entity","column","params"
-func SelectDomain(model interface{}, columns []string, params map[string]interface{}) interface{}  {
+func SelectDomain(model interface{}, columns []string, params map[string]interface{}) error {
 	fmt.Print("------------------>model ")
 	fmt.Println(reflect.TypeOf(model))
 	fmt.Println("------------------>columns " + strings.Join(columns, ","))
@@ -62,8 +62,10 @@ func SelectDomain(model interface{}, columns []string, params map[string]interfa
 		}
 		build.Reset()
 	}
-	if err := sqlString.Unscoped().Find(model); err != nil {
-		fmt.Println(">>>>>>>>>>>>Error msg " + err.Error())
-	}
-	return model
+	return sqlString.Unscoped().Find(model)
+}
+
+func InsertDomain(model interface{}) error {
+	_,err :=sqlEngine.InsertOne(model)
+	return err
 }

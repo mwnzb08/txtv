@@ -28,12 +28,44 @@ func (c *LoginController) PostLogin() interface{} {
 	params := config.GetJson(c.Ctx) // return map[string]interface{}
 	model := make([]domain.User,0)
 	pwd := params["pwd"]
-	pwd = config.Md5MixEncryption(pwd.(string))
+	actuallyPwd := config.Md5MixEncryption(pwd.(string))
 	delete(params, "pwd")
-	result := config.SelectDomain(&model, []string{"pwd"}, params)
-	if strings.EqualFold(pwd, result) {
-
+	if err := config.SelectDomain(&model, []string{}, params); err != nil {
+		fmt.Println("select domain error " + err.Error())
 	}
-	return result
+	render := make(map[string]interface{})
+	if len(model) > 0 && strings.EqualFold(actuallyPwd, model[0].Pwd) {
+		c.Session.Set("userName", model[0].UserId)
+		c.Session.Set("isLogin", true)
+		render["isLogin"] = true
+	} else {
+		render["isLogin"] = false
+	}
+	render["gridData"] = model
+	return render
+}
+
+func (c *LoginController) GetLoginout () {
+	c.Session.Clear()
+}
+
+func (c *LoginController) PostRegistry () interface{} {
+	request :=config.GetJson(c.Ctx)
+	model := new(domain.User)
+	model.UserId = request["user_id"].(string)
+	actuallyPwd := config.Md5MixEncryption(request["pwd"].(string))
+	model.Pwd = actuallyPwd
+	render := make(map[string]interface{})
+	if err := config.InsertDomain(model); err != nil {
+		fmt.Println("insert domain error " + err.Error())
+		render["result"] = "Account already exist"
+	} else {
+		render["result"] = "Registry successful"
+	}
+	return render
+}
+
+func (c *LoginController) GetTest () {
+	fmt.Println(c.Session.Get("userName"))
 }
 

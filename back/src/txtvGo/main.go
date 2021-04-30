@@ -5,11 +5,12 @@ import (
 	"github.com/kataras/iris/v12/mvc"
 	"github.com/kataras/iris/v12/sessions"
 	"main/controllers"
+	"time"
 )
 
 func main() {
 	app := iris.New()
-	sess := sessions.New(sessions.Config{Cookie:"sessionId"})
+	sess := sessions.New(sessions.Config{Cookie:"sessionIds", Expires: time.Minute * 10})
 	app.Use(sess.Handler())
 	sys := mvc.New(app.Party("/"))
 	sys.Register(sess.Start)

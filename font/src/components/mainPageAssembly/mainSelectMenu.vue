@@ -190,15 +190,10 @@
         <modal @mouseenter="doFocusInUserLogin(true)" @mouseleave="doFocusInUserLogin(false)"
           :show="showModal"
         >
-          <template v-slot:head>userLogin</template>
+          <template v-slot:head></template>
           <template v-slot:body>
-            <div>
-              userName<input v-model="selectEntity.name">
-            </div>
-            <div>
-            password<input v-model="selectEntity.pwd">
-            </div>
-            <button @click="login">login</button>
+            <login>
+            </login>
           </template>
         </modal>
       </div>
@@ -236,20 +231,18 @@
 
 <script>
 import Modal from '../commonBase/Modal'
+import Login from './login'
 export default {
   name: 'mainSelectMenu',
-  components: { Modal },
+  components: { Login, Modal },
   data () {
     return {
-      selectEntity: {},
       selectBox: 'public',
       MenuList: [
-        { name: '林银', url: 'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fnimg.ws.126.net%2F%3Furl%3Dhttp%253A%252F%252Fdingyue.ws.126.net%252F2021%252F0410%252F0ec17971j00qrbebh001hc000fe00j3g.jpg%26thumbnail%3D650x2147483647%26quality%3D80%26type%3Djpg&refer=http%3A%2F%2Fnimg.ws.126.net&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1620643178&t=08d1310e0973ae9c1ebec2044d7e5269' },
         { name: '周莲妃', url: 'https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=4021452577,2359594280&fm=26&gp=0.jpg' },
         { name: '唐复琼', url: 'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fimg1.gtimg.com%2F13%2F1391%2F139152%2F13915244_640x640_281.jpg&refer=http%3A%2F%2Fimg1.gtimg.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1620643463&t=072a5eccad1b1644d412ffc1dfa55747' },
         { name: '徐莉', url: 'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fgame.people.com.cn%2FNMediaFile%2F2015%2F0107%2FMAIN201501070835000494764022963.jpg&refer=http%3A%2F%2Fgame.people.com.cn&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1620643463&t=d3ec21daf7976d9c52ab5401e71291fe' },
         { name: '莫林', url: 'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fcomic.people.com.cn%2FNMediaFile%2F2014%2F1201%2FMAIN201412011401000273973235794.jpg&refer=http%3A%2F%2Fcomic.people.com.cn&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1620643463&t=0ff3f920d5f6fcf89d241ca62c86cd0b' },
-        { name: '林银', url: 'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fnimg.ws.126.net%2F%3Furl%3Dhttp%253A%252F%252Fdingyue.ws.126.net%252F2021%252F0410%252F0ec17971j00qrbebh001hc000fe00j3g.jpg%26thumbnail%3D650x2147483647%26quality%3D80%26type%3Djpg&refer=http%3A%2F%2Fnimg.ws.126.net&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1620643178&t=08d1310e0973ae9c1ebec2044d7e5269' },
         { name: '周莲妃', url: 'https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=4021452577,2359594280&fm=26&gp=0.jpg' },
         { name: '唐复琼', url: 'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fimg1.gtimg.com%2F13%2F1391%2F139152%2F13915244_640x640_281.jpg&refer=http%3A%2F%2Fimg1.gtimg.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1620643463&t=072a5eccad1b1644d412ffc1dfa55747' },
         { name: '徐莉', url: 'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fgame.people.com.cn%2FNMediaFile%2F2015%2F0107%2FMAIN201501070835000494764022963.jpg&refer=http%3A%2F%2Fgame.people.com.cn&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1620643463&t=d3ec21daf7976d9c52ab5401e71291fe' },
@@ -260,7 +253,7 @@ export default {
       showPublicSelectMenu: true,
       showLeftMoveButton: false,
       showRightMoveButton: true,
-      showModal: false,
+      showModal: true,
       setTimeOutJob1: null
     }
   },
@@ -348,11 +341,6 @@ export default {
     doFocusInUserLogin (val) {
       if (val) clearTimeout(this.setTimeOutJob1)
       else this.doSetTimeOut200ms(false)
-    },
-    login () {
-      this.$http.post('/api/login', this.selectEntity).then((res) => {
-        alert(JSON.stringify(res.data))
-      })
     }
   },
   beforeUnmount () {

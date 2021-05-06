@@ -10,3 +10,16 @@
 <template>
   <router-view />
 </template>
+
+<script>
+export default {
+  mounted () {
+  },
+  beforeMount () {
+    if (window.sessionStorage.getItem('userSession')) {
+      console.log('sssssssssssssss')
+      this.$store.state.userSession = JSON.stringify(JSON.parse(window.sessionStorage.getItem('userSession')))
+    }
+  }
+}
+</script>

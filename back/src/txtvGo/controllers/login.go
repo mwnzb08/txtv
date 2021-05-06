@@ -34,13 +34,15 @@ func (c *LoginController) PostLogin() interface{} {
 		fmt.Println("select domain error " + err.Error())
 	}
 	render := make(map[string]interface{})
+	userSession := make(map[string]interface{})
 	if len(model) > 0 && strings.EqualFold(actuallyPwd, model[0].Pwd) {
 		c.Session.Set("userName", model[0].UserId)
 		c.Session.Set("isLogin", true)
-		render["isLogin"] = true
+		userSession["isLogin"] = true
 	} else {
-		render["isLogin"] = false
+		userSession["isLogin"] = false
 	}
+	render["userSession"] = userSession
 	render["gridData"] = model
 	return render
 }

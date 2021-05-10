@@ -17,7 +17,6 @@ axios.defaults.withCredentials = true
 //     return response
 //   }]
 // })
-
 axios.interceptors.request.use((request) => {
   return request
 }, error => {
@@ -25,12 +24,20 @@ axios.interceptors.request.use((request) => {
 })
 axios.interceptors.response.use((response) => {
   switch (response.status) {
-    case 200: break
-    case 404: break
-    case 408: break
-    case 500: alert('service error')
+    case 200:
+      break
+    case 404: window.message.warning('url not found')
+      break
+    case 408: window.message.error('service error')
+      break
+    case 500: window.message.error('service error')
       break
     default:
+  }
+  if (response.status === 200) {
+    return Promise.resolve(response)
+  } else {
+    return Promise.reject(response)
   }
 }, error => {
   return Promise.resolve(error)

@@ -41,8 +41,12 @@ export default {
   methods: {
     login () {
       this.$http.post('/login', this.selectEntity).then((res) => {
-        this.$store.state.userSession = res.data.userSession
-        window.sessionStorage.setItem('userSession', JSON.stringify(res.data.userSession))
+        if (res.data.userSession.isLogin) {
+          this.$store.state.userSession = res.data.userSession
+          window.sessionStorage.setItem('userSession', JSON.stringify(res.data.userSession))
+        } else {
+          window.message.error('Login Fail')
+        }
       })
     }
   }

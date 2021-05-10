@@ -35,12 +35,12 @@ export default {
   name: 'login',
   data () {
     return {
-      selectEntity: {}
+      selectEntity: { user_id: '', pwd: '', limit: 1 }
     }
   },
   methods: {
     login () {
-      this.$http.post('/api/login', this.selectEntity).then((res) => {
+      this.$http.post('/login', this.selectEntity).then((res) => {
         this.$store.state.userSession = res.data.userSession
         window.sessionStorage.setItem('userSession', JSON.stringify(res.data.userSession))
       })

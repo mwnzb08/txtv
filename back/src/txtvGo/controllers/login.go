@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"errors"
 	"fmt"
 	"github.com/kataras/iris/v12/context"
 	"github.com/kataras/iris/v12/sessions"
@@ -25,17 +26,20 @@ func (c *LoginController) Get() string {
 }
 // user login controller
 func (c *LoginController) PostLogin() interface{} {
-	params := config.GetJson(c.Ctx) // return map[string]interface{}
+	request := config.GetJson(c.Ctx) // return map[string]interface{}
+	valid := config.ValidMapKey(request,[]string{"pwd","user_idaa"})
+	if !valid {
+		panic(errors.New("--------->params error"))
+	}
 	model := make([]domain.User,0)
-	pwd := params["pwd"]
-	actuallyPwd := config.Md5MixEncryption(pwd.(string))
-	delete(params, "pwd")
-	if err := config.SelectDomain(&model, []string{}, params); err != nil {
+	pwd := request["pwd"]
+	delete(request, "pwd")
+	if err := config.SelectDomain(&model, []string{}, request); err != nil {
 		fmt.Println("select domain error " + err.Error())
 	}
 	render := make(map[string]interface{})
 	userSession := make(map[string]interface{})
-	if len(model) > 0 && strings.EqualFold(actuallyPwd, model[0].Pwd) {
+	if len(model) > 0 && strings.EqualFold(config.Md5MixEncryption(pwd.(string)), model[0].Pwd) {
 		c.Session.Set("userName", model[0].UserId)
 		c.Session.Set("isLogin", true)
 		userSession["isLogin"] = true

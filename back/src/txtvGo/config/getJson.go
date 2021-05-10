@@ -19,9 +19,24 @@ func GetJson(ctx context.Context) map[string]interface{} {
 	if err := json.Indent(&buffer, data, "", ""); err != nil {
 		fmt.Println("json Indent fail " + err.Error())
 	}
-	var resultJson interface{}
+	var resultJson map[string]interface{}
 	if err := json.Unmarshal(buffer.Bytes() ,&resultJson); err !=nil {
 		fmt.Println("json Unmarshal fail " + err.Error())
 	}
-	return resultJson.(map[string]interface{})
+	return resultJson
+}
+
+func ValidMapKey(source map[string]interface{}, valid []string) bool {
+	if len(source) == 0 || len(source) < len(valid){
+		return false
+	}
+	// 判断切片的元素是否包含函数需要一个
+	//for _,key1 := range valid {
+	//	for key2,_ := range source {
+	//		if strings.EqualFold(key1,key2) {
+	//			return false
+	//		}
+	//	}
+	//}
+	return true
 }

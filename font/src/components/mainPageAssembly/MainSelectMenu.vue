@@ -4,6 +4,7 @@
     width 100%
     overflow-y auto
     overflow-x hidden
+    background-color rgba(69, 68, 73, 0.86)
     /*background-repeat no-repeat*/
     /*background-size 100% 100%*/
   .mainSelectMenu2
@@ -23,6 +24,7 @@
     height 29.25px
     padding-bottom 10px
   .mainSelectMenu4
+    margin-top 10px
     height 0.5px
     text-align left
     background-color white
@@ -32,7 +34,7 @@
     cursor default
     font-size 22px
     text-align left
-    padding 5px 0 10px 0
+    padding 5px 0 30px 0
   .mainSelectMenu6
     overflow-y auto
     height 100%
@@ -231,7 +233,7 @@
 
 <script>
 import Modal from '../commonBase/Modal'
-import Login from './login'
+import Login from './Login'
 export default {
   name: 'mainSelectMenu',
   components: { Login, Modal },

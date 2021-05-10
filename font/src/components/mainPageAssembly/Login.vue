@@ -21,7 +21,12 @@
         <input v-model="selectEntity.pwd" maxlength="32">
       </label>
     </div>
-    <button class="login-button" @click="login">登录</button>
+    <div class="list-padding">
+      <button class="login-button" @click="login">登录</button>
+    </div>
+    <div>
+      <label @click="$router.push({path: 'Registry'})">注册</label>
+    </div>
   </div>
 </template>
 
@@ -35,7 +40,7 @@ export default {
   },
   methods: {
     login () {
-      this.$http.post('/login', this.selectEntity).then((res) => {
+      this.$http.post('/api/login', this.selectEntity).then((res) => {
         this.$store.state.userSession = res.data.userSession
         window.sessionStorage.setItem('userSession', JSON.stringify(res.data.userSession))
       })

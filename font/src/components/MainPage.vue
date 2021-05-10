@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import MainSelectMenu from './mainPageAssembly/mainSelectMenu'
+import MainSelectMenu from './mainPageAssembly/MainSelectMenu'
 export default {
   name: 'MainPage',
   components: { MainSelectMenu },

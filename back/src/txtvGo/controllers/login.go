@@ -27,7 +27,7 @@ func (c *LoginController) Get() string {
 // user login controller
 func (c *LoginController) PostLogin() interface{} {
 	request := config.GetJson(c.Ctx) // return map[string]interface{}
-	valid := config.ValidMapKey(request,[]string{"pwd","user_idaa"})
+	valid := config.ValidMapKey(request,[]string{"pwd","user_id"})
 	if !valid {
 		panic(errors.New("--------->params error"))
 	}

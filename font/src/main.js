@@ -10,6 +10,7 @@ import './assets/css/global.styl'
 message.config({ maxCount: 3 })
 window.message = message
 const app = createApp(App)
+app.config.productionTip = false
 app.config.globalProperties.$http = axios
 app.use(Input).use(Button)
 app.use(store).use(router).use(moment)

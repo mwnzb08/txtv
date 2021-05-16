@@ -14,7 +14,7 @@
     float right
     padding-left 40px
     cursor initial
-    width 300px
+    width 360px
     height 432px
   .mainSelectMenu3
     color white
@@ -66,7 +66,7 @@
     display flex
     flex-direction row
     width 100%
-    height 372px
+    height 424px
     overflow-x hidden
     overflow-y hidden
     padding 30px 0 30px 0
@@ -77,15 +77,15 @@
     float left
     border-radius 5px
     margin 0 5px 0 5px
-    height 372px
-    width 320px
+    height 364px
+    width 260px
     cursor pointer
     transition all 0.2s
   .publicSelectMenu img:hover
     transform scale(1.08)
   .moveButton
     position: absolute
-    right: 340px
+    right: 360px
     height: 372px
     width: 50px
   .moveButton img
@@ -255,7 +255,7 @@ export default {
       showPublicSelectMenu: true,
       showLeftMoveButton: false,
       showRightMoveButton: true,
-      showModal: true,
+      showModal: false,
       setTimeOutJob1: null
     }
   },

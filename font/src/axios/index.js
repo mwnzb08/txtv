@@ -5,6 +5,18 @@ https.defaults.timeout = 10 * 1000
 https.defaults.responseType = 'json'
 https.defaults.withCredentials = true
 https.interceptors.request.use(request => {
+  let i = 0
+  let c = ''
+  let newUrl = ''
+  for (i; i < request.url.length; i++) {
+    c = request.url.charAt(i)
+    if (c >= 'A' && c <= 'Z') {
+      newUrl += '/' + c.toLowerCase()
+    } else {
+      newUrl += c
+    }
+  }
+  request.url = newUrl
   return request
 }, error => {
   return Promise.reject(error)

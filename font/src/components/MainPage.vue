@@ -4,16 +4,19 @@
 
 <template>
 <div>
-  <main-select-menu style="overflow-x: auto">
+  <main-select-menu style="margin-bottom: 30px; min-width: 1300px">
   </main-select-menu>
+  <middle-menu style="height: 100px; margin-bottom: 40px">
+  </middle-menu>
 </div>
 </template>
 
 <script>
 import MainSelectMenu from './mainPageAssembly/MainSelectMenu'
+import MiddleMenu from './mainPageAssembly/MiddleMenu'
 export default {
   name: 'MainPage',
-  components: { MainSelectMenu },
+  components: { MiddleMenu, MainSelectMenu },
   props: {},
   data () {
     return {}

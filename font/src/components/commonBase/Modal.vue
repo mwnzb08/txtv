@@ -4,7 +4,7 @@
 
 <template>
 <div ref="el" style="position: absolute; z-index: 50000; background-color: white; height: 300px; width: 400px
-; border-radius: 10px; left: -300px; top:54px" v-show="show">
+; border-radius: 5px; left: -300px; top:54px" v-show="show">
   <div><slot name="head"></slot></div>
   <div><slot name="body"></slot></div>
     <div><slot name="foot"></slot></div>

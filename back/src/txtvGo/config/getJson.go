@@ -28,6 +28,7 @@ func GetJson(ctx context.Context) map[string]interface{} {
 }
 
 func ValidMapKey(source map[string]interface{}, valid []string) bool {
+	fmt.Println(source)
 	if len(source) == 0 || len(source) < len(valid){
 		return false
 	}

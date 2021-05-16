@@ -15,7 +15,8 @@
 export default {
   beforeMount () {
     if (window.sessionStorage.getItem('userSession')) {
-      this.$store.state.userSession = JSON.stringify(JSON.parse(window.sessionStorage.getItem('userSession')))
+      this.$store.state.userSession = JSON.parse(window.sessionStorage.getItem('userSession'))
+      console.log(this.$store.state.userSession.isLogin)
     }
   }
 }

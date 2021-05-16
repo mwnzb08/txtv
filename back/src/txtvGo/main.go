@@ -9,6 +9,7 @@ import (
 )
 
 func main() {
+	//service.PostValidCodeToEmail(map[string]interface{}{"user_id": "mowei"})
 	app := iris.New()
 	sess := sessions.New(sessions.Config{Cookie:"sessionIds", Expires: time.Minute * 10})
 	app.Use(sess.Handler())

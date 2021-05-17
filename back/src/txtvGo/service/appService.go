@@ -46,7 +46,7 @@ func PostRegistry (request map[string]interface{}) interface{} {
 	actuallyPwd := config.Md5MixEncryption(request["pwd"].(string))
 	model.Pwd = actuallyPwd
 	render := make(map[string]interface{})
-	if err := config.InsertDomain(&model); err != nil {
+	if err := config.InsertDomainOne(&model); err != nil {
 		fmt.Println("insert domain error " + err.Error())
 		render["result"] = "Account already exist"
 		render["isRegistry"] = false

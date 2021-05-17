@@ -34,7 +34,7 @@ func SendEmail (sendFrom string, sendTo []string, subject string, body string, t
 		case ret:=<-getStatus : model.Status = ret; model.Remark = <-getStatus
 		case <-time.After(time.Second * 5) : model.Status = "N"; model.Remark = "time out"
 		}
-		if err := InsertDomain(model); err != nil {
+		if err := InsertDomainOne(model); err != nil {
 			fmt.Println(err)
 		}
 	}()

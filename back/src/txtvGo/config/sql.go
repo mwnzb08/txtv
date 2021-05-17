@@ -65,7 +65,24 @@ func SelectDomain(model interface{}, columns []string, params map[string]interfa
 	return sqlString.Unscoped().Find(model)
 }
 
-func InsertDomain(model interface{}) error {
+func InsertDomainOne(model interface{}) error {
 	_,err :=sqlEngine.InsertOne(model)
 	return err
+}
+
+func FindById (model interface{}, id interface{}, column []string) {
+	_, _ = sqlEngine.Id(id).Cols(strings.Join(column,",")).Get(model)
+}
+// 不想每个domain 都写一个获取Id的接口,纯粹的传值
+func UpdateDomain(model interface{}, id interface{}) {
+	_, _ = sqlEngine.Id(id).Update(model)
+}
+
+func Delete (model interface{}, id interface{}) {
+	_, _ = sqlEngine.Id(id).Delete(model)
+}
+
+func Exec (sql string, value ...interface{}) (interface{}, error){
+	result, err := sqlEngine.Exec(sql, value)
+	return result, err
 }

@@ -8,15 +8,18 @@
   </main-select-menu>
   <middle-menu style="height: 100px; margin-bottom: 40px">
   </middle-menu>
+  <video-column-first style="height: 100px; margin-bottom: 40px">
+  </video-column-first>
 </div>
 </template>
 
 <script>
 import MainSelectMenu from './mainPageAssembly/MainSelectMenu'
 import MiddleMenu from './mainPageAssembly/MiddleMenu'
+import VideoColumnFirst from './mainPageAssembly/VideoColumnFirst'
 export default {
   name: 'MainPage',
-  components: { MiddleMenu, MainSelectMenu },
+  components: { VideoColumnFirst, MiddleMenu, MainSelectMenu },
   props: {},
   data () {
     return {}

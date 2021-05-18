@@ -24,7 +24,7 @@
         <a-button class="border-radius" @click="login">登录</a-button>
       </div>
       <div>
-        <label @click="$router.push({path: 'Registry'})">注册</label>
+        <a @click="$router.push({path: 'Registry'})">注册</a>
       </div>
     </div>
     <div v-if="userSession.isLogin" style="height: 100%; padding-top: 40%">

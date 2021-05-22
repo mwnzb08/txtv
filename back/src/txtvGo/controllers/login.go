@@ -22,11 +22,6 @@ var (
 	render interface{}
 )
 
-func (c *LoginController) Get() string {
-	loginUser := c.Session.Increment("userSession", 1)
-	return fmt.Sprintf("%d visit from my current session in seconds of server's up-time",
-		loginUser)
-}
 // user login controller
 func (c *LoginController) PostLogin() interface{} {
 	request = config.GetJson(c.Ctx) // return map[string]interface{}
@@ -41,6 +36,10 @@ func (c *LoginController) GetLoginOut () interface{} {
 }
 
 func (c *LoginController) PostCheckRegistryUserId () interface{} {
+	c.Session.Increment("countRequest", 1)
+	if c.Session.Get("countRequest").(int) > 10 {
+		return map[string]string{"gridData": "try again later"}
+	}
 	request = config.GetJson(c.Ctx)
 	render = service.PostCheckRegistryUserId(request)
 	return render
@@ -50,10 +49,6 @@ func (c *LoginController) PostRegistry () interface{} {
 	request = config.GetJson(c.Ctx)
 	render = service.PostRegistry(request)
 	return render
-}
-
-func (c *LoginController) GetTest () {
-	fmt.Println(c.Session.Get("userName"))
 }
 
 func (c *LoginController) PostValidCodeToEmail () {

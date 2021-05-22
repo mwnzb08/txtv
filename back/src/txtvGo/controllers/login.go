@@ -44,7 +44,7 @@ func (c *LoginController) PostCheckRegistryUserId () interface{} {
 	render = service.PostCheckRegistryUserId(request)
 	return render
 }
-
+// registry interface
 func (c *LoginController) PostRegistry () interface{} {
 	request = config.GetJson(c.Ctx)
 	render = service.PostRegistry(request)

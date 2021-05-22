@@ -34,7 +34,7 @@ func (c *LoginController) GetLoginOut () interface{} {
 	render = map[string]bool{"gridData":true}
 	return render
 }
-
+// check 10's when registry user_id if exits
 func (c *LoginController) PostCheckRegistryUserId () interface{} {
 	c.Session.Increment("countRequest", 1)
 	if c.Session.Get("countRequest").(int) > 10 {

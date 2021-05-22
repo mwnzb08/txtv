@@ -50,7 +50,7 @@ func (c *LoginController) PostRegistry () interface{} {
 	render = service.PostRegistry(request)
 	return render
 }
-
+// send
 func (c *LoginController) PostValidCodeToEmail () {
 	request = config.GetJson(c.Ctx)
 	service.PostValidCodeToEmail(request)

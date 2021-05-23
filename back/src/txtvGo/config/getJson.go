@@ -7,6 +7,11 @@ import (
 	"github.com/kataras/iris/v12/context"
 	"strings"
 )
+
+func init () {
+	fmt.Println("----------------> getJson.go read successful")
+}
+
 // get context data then Unmarshal as json
 func GetJson(ctx context.Context) map[string]interface{} {
 	var (

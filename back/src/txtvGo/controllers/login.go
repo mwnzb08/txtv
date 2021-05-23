@@ -6,6 +6,8 @@ import (
 	"github.com/kataras/iris/v12/sessions"
 	"main/config"
 	"main/service"
+	"sync"
+	"time"
 )
 
 func init () {
@@ -22,9 +24,15 @@ var (
 	render interface{}
 )
 
+var once sync.Once
+
 // user login controller
 func (c *LoginController) PostLogin() interface{} {
 	request = config.GetJson(c.Ctx) // return map[string]interface{}
+	result, err := service.CheckLogin(request, c.Session)
+	if err != nil {
+		return result
+	}
 	render = service.PostLogin(request, c.Session)
 	return render
 }
@@ -38,6 +46,12 @@ func (c *LoginController) GetLoginOut () interface{} {
 func (c *LoginController) PostCheckRegistryUserId () interface{} {
 	c.Session.Increment("countRequest", 1)
 	if c.Session.Get("countRequest").(int) > 10 {
+		go func() {
+			once.Do(func() {
+				time.Sleep(time.Minute * 5)
+				c.Session.Set("countRequest", 0)
+			})
+		}()
 		return map[string]string{"gridData": "try again later"}
 	}
 	request = config.GetJson(c.Ctx)
@@ -53,6 +67,6 @@ func (c *LoginController) PostRegistry () interface{} {
 // send
 func (c *LoginController) PostValidCodeToEmail () {
 	request = config.GetJson(c.Ctx)
-	service.PostValidCodeToEmail(request)
+	service.PostValidCodeToEmail(request, c.Session)
 }
 

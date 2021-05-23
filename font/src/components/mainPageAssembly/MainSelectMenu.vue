@@ -255,7 +255,7 @@ export default {
       showPublicSelectMenu: true,
       showLeftMoveButton: false,
       showRightMoveButton: true,
-      showModal: false,
+      showModal: true,
       setTimeOutJob1: null
     }
   },

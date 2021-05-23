@@ -31,6 +31,7 @@ func PostLogin (request map[string]interface{}, session *sessions.Session) inter
 		userSession["isLogin"] = true
 	} else {
 		userSession["isLogin"] = false
+		session.Set("isLogin", false)
 	}
 	render["userSession"] = userSession
 	render["gridData"] = model
@@ -38,17 +39,18 @@ func PostLogin (request map[string]interface{}, session *sessions.Session) inter
 }
 
 func PostRegistry (request map[string]interface{}) interface{} {
-	if !config.ValidMapKey(request,[]string{"user_id","pwd"}) {
+	if !config.ValidMapKey(request,[]string{"user_id","pwd", "email"}) {
 		panic(errors.New("--------->params error"))
 	}
 	model := new(domain.User)
 	model.UserId = request["user_id"].(string)
 	actuallyPwd := config.Md5MixEncryption(request["pwd"].(string))
 	model.Pwd = actuallyPwd
+	model.Email = request["email"].(string)
 	render := make(map[string]interface{})
-	if err := config.InsertDomainOne(&model); err != nil {
+	if err := config.InsertDomainOne(model); err != nil {
 		fmt.Println("insert domain error " + err.Error())
-		render["result"] = "Account already exist"
+		render["result"] = "email already exist"
 		render["isRegistry"] = false
 	} else {
 		render["result"] = "Registry successful"
@@ -77,7 +79,7 @@ func PostCheckRegistryUserId (request map[string]interface{}) interface{} {
 	return render
 }
 
-func PostValidCodeToEmail (request map[string]interface{}) {
+func PostValidCodeToEmail (request map[string]interface{}, session *sessions.Session) {
 	if !config.ValidMapKey(request,[]string{"user_id"}) {
 		panic(errors.New("--------->params error"))
 	}
@@ -87,6 +89,8 @@ func PostValidCodeToEmail (request map[string]interface{}) {
 	userId := request["user_id"]
 	requestUnique := make(map[string]interface{})
 	requestUnique["user_id"] = userId
+	fmt.Println("sssssssssssssssssssssssss")
+	fmt.Println(model)
 	if err := config.SelectDomain(&model, []string{"email"}, requestUnique); err != nil {
 		fmt.Println("select domain error " + err.Error())
 	}
@@ -96,4 +100,5 @@ func PostValidCodeToEmail (request map[string]interface{}) {
 	if err:=config.SendEmail(sendFrom, sendTo, "Valid Code",body,"registry"); err !=nil {
 		fmt.Println(err)
 	}
+	session.Set("valid_code_service", strconv.Itoa(randNum))
 }

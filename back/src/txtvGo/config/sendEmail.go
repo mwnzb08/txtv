@@ -10,6 +10,10 @@ import (
 	"time"
 )
 
+func init () {
+	fmt.Println("----------------> sendEmail.go read successful")
+}
+
 func SendEmail (sendFrom string, sendTo []string, subject string, body string, types string) error {
 	fmt.Println("----------------> send a message to " + strings.Join(sendTo,","))
 	if len(strings.Join(sendTo, ",")) == 0 {

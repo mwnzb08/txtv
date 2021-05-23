@@ -55,18 +55,21 @@ func SelectDomain(model interface{}, columns []string, params map[string]interfa
 		case "limit": sqlString.Limit(int(value.(float64)))
 		case "sort": sqlString.OrderBy(value.(string))
 		default: {
-			build.WriteString(key)
-			build.WriteString("=?")
-			sqlString.Where( build.String(), value)
-		}
-		}
+			if !strings.Contains(key,"_ignore") {
+				build.WriteString(key)
+				build.WriteString("=?")
+				sqlString.Where( build.String(), value)
+			}
+		}}
 		build.Reset()
 	}
 	return sqlString.Unscoped().Find(model)
 }
 
 func InsertDomainOne(model interface{}) error {
+	fmt.Println(model)
 	_,err :=sqlEngine.InsertOne(model)
+	fmt.Println("aaa")
 	return err
 }
 

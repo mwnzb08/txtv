@@ -20,3 +20,7 @@ var msgCodeAndValue = map[string]string {
 func Msg (code string) string {
 	return msgCodeAndValue[code]
 }
+
+func GetAllMsg () map[string]string{
+	return msgCodeAndValue
+}

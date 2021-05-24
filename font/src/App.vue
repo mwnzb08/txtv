@@ -18,6 +18,13 @@ export default {
       this.$store.state.userSession = JSON.parse(window.sessionStorage.getItem('userSession'))
       console.log(this.$store.state.userSession.isLogin)
     }
+    this.$http.get('/msg').then((res) => {
+      window.messageString = res.data
+      // window.sessionStorage.setItem('messageString', JSON.stringify(res.data))
+      //
+    })
+  },
+  setup () {
   }
 }
 </script>

@@ -21,7 +21,6 @@ var (
 	//render interface{}
 )
 
-
 func (a *CacheController) GetMsg () interface{} {
 	fmt.Println("---------------go new")
 	return config.GetAllMsg()

@@ -99,7 +99,7 @@ export default {
   },
   methods: {
     doCheckRegistryUserId () {
-      if (this.selectEntity.user_id.trim() !== '' && this.checkParams.warning === false) {
+      if (this.selectEntity.user_id.trim().length >= 6 && this.checkParams.warning === false) {
         this.checkParams.user_id = false
         this.checkParams.success = false
         this.checkParams.warning = false// 暂时不想放到vuex，或许
@@ -115,25 +115,32 @@ export default {
             this.checkParams.user_id = res.data.gridData
           }
         })
+      } else if (this.selectEntity.user_id.trim().length < 6) {
+        this.checkParams.user_id = true
       }
     },
     checkBeforeSubmit () {
-      if (this.selectEntity.user_id < 6 || this.selectEntity.pwd < 6 || this.selectEntity.email < 8) {
-        window.notification.error({ message: 'Error', description: '输入字段过短' })
+      if (this.selectEntity.user_id.length < 6 || this.selectEntity.pwd.length < 6) {
+        window.notification.error({ message: 'Error', description: window.messageString['appMsg.E0003'] })
+        return false
+      }
+      var regEmail = /^[A-Za-z0-9\u4e00-\u9fa5]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/
+      if (this.selectEntity.email !== '' && !regEmail.test(this.selectEntity.email)) {
+        window.notification.error({ message: 'Error', description: window.messageString['appMsg.E0005'] })
         return false
       }
       if (this.checkParams.warning) {
-        window.notification.error({ message: 'Error', description: '请求过于频繁,请稍后刷新后再尝试' })
+        window.notification.error({ message: 'Error', description: window.messageString['appMsg.E0002'] })
         return false
       }
       if (this.checkParams.user_id) {
-        window.notification.error({ message: 'Error', description: '无效用户名' })
+        window.notification.error({ message: 'Error', description: window.messageString['appMsg.E0001'] })
         this.$refs.userId.focus()
         return false
       }
       if (this.selectEntity.pwd.trim() !== this.selectEntityIgnore.pwd2.trim()) {
         this.selectEntityIgnore.pwd2 = ''
-        window.notification.error({ message: 'Error', description: '两次输入密码不一致' })
+        window.notification.error({ message: 'Error', description: window.messageString['appMsg.E0004'] })
         return false
       }
       return true

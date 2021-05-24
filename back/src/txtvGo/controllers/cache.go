@@ -8,10 +8,10 @@ import (
 )
 
 func init () {
-	fmt.Println("----------------> app.go read successful")
+	fmt.Println("----------------> cache.go read successful")
 }
 
-type AppController struct {
+type CacheController struct {
 	Session *sessions.Session
 	Ctx context.Context
 }
@@ -21,6 +21,9 @@ var (
 	//render interface{}
 )
 
-func (a *AppController) GetMsg () interface{} {
+
+func (a *CacheController) GetMsg () interface{} {
+	fmt.Println("---------------go new")
 	return config.GetAllMsg()
 }
+

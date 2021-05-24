@@ -2,6 +2,7 @@ package main
 
 import (
 	"github.com/kataras/iris/v12"
+	"github.com/kataras/iris/v12/cache"
 	"github.com/kataras/iris/v12/mvc"
 	"github.com/kataras/iris/v12/sessions"
 	"main/controllers"
@@ -15,6 +16,13 @@ func main() {
 	app.Use(sess.Handler())
 	sys := mvc.New(app.Party("/"))
 	sys.Register(sess.Start)
-	sys.Handle(&controllers.LoginController{}).Handle(&controllers.AppController{})
+	sys.Handle(&controllers.LoginController{})
+	mvc.Configure(app, cacheController) // 使用緩存的controller
 	app.Run(iris.Addr(":8024"))
+}
+
+var cacheHandler = cache.Handler(30 * time.Second)
+func cacheController (m *mvc.Application) {
+	m.Router.Use(cacheHandler)
+	m.Handle(&controllers.CacheController{})
 }

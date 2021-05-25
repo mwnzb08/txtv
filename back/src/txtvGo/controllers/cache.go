@@ -20,6 +20,9 @@ var (
 	//request  map[string]interface{}
 	//render interface{}
 )
+//func (a *CacheController) BeforeActivation(m mvc.BeforeActivation) {
+//	m.Handle("GET", "/msg", "GetMsg", iris.Cache304(time.Second * 5), cache.Handler(time.Second * 5))
+//} /
 
 func (a *CacheController) GetMsg () interface{} {
 	fmt.Println("---------------go new")

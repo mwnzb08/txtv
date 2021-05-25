@@ -9,9 +9,7 @@ import './assets/css/global.styl'
 
 message.config({ maxCount: 3 })
 window.message = message
-notification.top = '10px'
-notification.placement = 'topRight'
-notification.duration = 3
+notification.config({ duration: 2 })
 window.notification = notification
 const app = createApp(App)
 app.config.productionTip = false

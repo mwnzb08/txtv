@@ -7,6 +7,7 @@ import (
 	"main/config"
 	"main/domain"
 	"math/rand"
+	"regexp"
 	"strconv"
 	"strings"
 	"time"
@@ -42,6 +43,10 @@ func PostRegistry (request map[string]interface{}) interface{} {
 	if !config.ValidMapKey(request,[]string{"user_id","pwd", "email"}) {
 		panic(errors.New("--------->params error"))
 	}
+	pattern := `\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*`
+	if len(request["user_id"].(string)) < 6 || len(request["pwd"].(string)) < 6 || !regexp.MustCompile(pattern).MatchString( request["email"].(string)) {
+		panic(errors.New("--------->非法操作 error"))
+	}
 	model := new(domain.User)
 	model.UserId = request["user_id"].(string)
 	actuallyPwd := config.Md5MixEncryption(request["pwd"].(string))
@@ -50,10 +55,10 @@ func PostRegistry (request map[string]interface{}) interface{} {
 	render := make(map[string]interface{})
 	if err := config.InsertDomainOne(model); err != nil {
 		fmt.Println("insert domain error " + err.Error())
-		render["result"] = "email already exist"
+		render["result"] = "appMsg.E0006"
 		render["isRegistry"] = false
 	} else {
-		render["result"] = "Registry successful"
+		render["result"] = "appMsg.E0007"
 		render["isRegistry"] = true
 	}
 	return render

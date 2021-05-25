@@ -14,7 +14,8 @@ var msgCodeAndValue = map[string]string {
 	"appMsg.E0003": "信息输入字段过短",
 	"appMsg.E0004": "两次输入密码不一致",
 	"appMsg.E0005": "邮箱格式不正确",
-	"appMsg.E0006": "验证码错误",
+	"appMsg.E0006": "邮箱或者用户名已存在",
+	"appMsg.E0007": "注册成功, 跳转中...",
 }
 
 func Msg (code string) string {

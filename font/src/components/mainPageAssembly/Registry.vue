@@ -94,7 +94,8 @@ export default {
       selectEntity: { user_id: '', pwd: '', email: '' },
       selectEntityIgnore: { pwd2: '' },
       passwordType: 'password',
-      checkParams: { user_id: false, loading: false, success: false, warning: false }
+      checkParams: { user_id: false, loading: false, success: false, warning: false },
+      timer1: null
     }
   },
   methods: {
@@ -148,10 +149,22 @@ export default {
     doRegistry () {
       if (!this.checkBeforeSubmit()) return
       this.$http.post('/registry', this.selectEntity).then((res) => {
-        this.checkParams.loading = false
-        this.checkParams.user_id = res.data.gridData
+        // this.checkParams.loading = false
+        // this.checkParams.user_id = res.data.gridData
+        const data = res.data
+        if (!data.isRegistry) {
+          window.notification.error({ message: 'Error', description: window.messageString[data.result] })
+        } else {
+          window.notification.success({ message: 'Successful', description: window.messageString[data.result] })
+          this.timer1 = setTimeout(() => {
+            this.$router.push({ path: '/' })
+          }, 2100)
+        }
       })
     }
+  },
+  beforeUnmount () {
+    clearTimeout(this.timer1)
   }
 }
 </script>

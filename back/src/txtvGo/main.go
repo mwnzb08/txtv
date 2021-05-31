@@ -16,8 +16,8 @@ func main() {
 	app.Use(sess.Handler())
 	sys := mvc.New(app.Party("/"))
 	sys.Register(sess.Start)
-	sys.Handle(&controllers.LoginController{})
-	mvc.Configure(app, cacheController) // 使用緩存的controller
+	sys.Handle(&controllers.LoginController{}).Handle(&controllers.CacheController{})
+	//mvc.Configure(app, cacheController) // 使用緩存的controller
 	app.Run(iris.Addr(":8024"))
 }
 

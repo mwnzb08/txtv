@@ -4,7 +4,9 @@ go 1.15
 
 require (
 	github.com/ajg/form v1.5.1 // indirect
+	github.com/denisenkom/go-mssqldb v0.0.0-20200428022330-06a60b6afbbc // indirect
 	github.com/fasthttp-contrib/websocket v0.0.0-20160511215533-1f3b11f56072 // indirect
+	github.com/go-redis/redis v6.15.9+incompatible
 	github.com/go-sql-driver/mysql v1.6.0
 	github.com/go-xorm/xorm v0.7.9
 	github.com/google/go-querystring v1.0.0 // indirect
@@ -16,7 +18,9 @@ require (
 	github.com/kataras/golog v0.0.18 // indirect
 	github.com/kataras/iris/v12 v12.1.8
 	github.com/kataras/neffos v0.0.16 // indirect
+	github.com/lib/pq v1.7.0 // indirect
 	github.com/mattn/go-colorable v0.1.8 // indirect
+	github.com/mattn/go-sqlite3 v1.14.0 // indirect
 	github.com/mediocregopher/radix/v3 v3.5.2 // indirect
 	github.com/microcosm-cc/bluemonday v1.0.3 // indirect
 	github.com/moul/http2curl v1.0.0 // indirect
@@ -39,6 +43,6 @@ require (
 	gopkg.in/gomail.v2 v2.0.0-20160411212932-81ebce5c23df
 	gopkg.in/ini.v1 v1.57.0
 	gopkg.in/yaml.v3 v3.0.0-20200615113413-eeeca48fe776 // indirect
+	xorm.io/builder v0.3.7 // indirect
 	xorm.io/core v0.7.2-0.20190928055935-90aeac8d08eb
-	xorm.io/xorm v1.0.7 // indirect
 )

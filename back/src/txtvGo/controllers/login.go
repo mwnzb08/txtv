@@ -58,7 +58,7 @@ func (c *LoginController) PostCheckRegistryUserId () interface{} {
 	render = service.PostCheckRegistryUserId(request)
 	return render
 }
-// registry interface
+// registry interface 没有对频繁请求做后端的限制，也就是可以被ddos攻击。懒
 func (c *LoginController) PostRegistry () interface{} {
 	request = config.GetJson(c.Ctx)
 	render = service.PostRegistry(request)

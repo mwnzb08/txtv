@@ -29,11 +29,14 @@ var once sync.Once
 // user login controller
 func (c *LoginController) PostLogin() interface{} {
 	request = config.GetJson(c.Ctx) // return map[string]interface{}
-	result, err := service.CheckLogin(request, c.Session)
-	if err != nil {
-		return result
+	if resultOfRedis, err := config.Redis.Get(request["user_id"].(string)).Result(); err != nil { // if redis not exists this user cache
+		if result, err := service.CheckLogin(request, c.Session); err != nil {
+			return result
+		}
+		render = service.PostLogin(request, c.Session)
+	} else {
+		return resultOfRedis
 	}
-	render = service.PostLogin(request, c.Session)
 	return render
 }
 // user login out

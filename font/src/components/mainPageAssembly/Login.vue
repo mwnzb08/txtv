@@ -64,15 +64,16 @@ export default {
       this.$http.post('/login', this.selectEntity).then((res) => {
         const data = res.data
         if (data.userSession && data.userSession.isLogin) {
-          this.$store.state.userSession = res.data.userSession
-          window.sessionStorage.setItem('userSession', JSON.stringify(res.data.userSession))
+          this.$store.state.userSession = data.userSession
+          data.userSession.currentData = new Date()
+          window.localStorage.setItem('userSession', JSON.stringify(data.userSession))
           this.selectEntity.pwd = ''
-        } else {
+        } else { // return back service request
           if (data.userSession && data.userSession.countLogin) {
-            this.$store.state.userSession = res.data.userSession
-            window.sessionStorage.setItem('userSession', JSON.stringify(res.data.userSession))
+            this.$store.state.userSession = data.userSession
+            window.localStorage.setItem('userSession', JSON.stringify(data.userSession))
             window.message.error(data.userSession.gridData)
-          } else {
+          } else { // else
             window.message.error('用户名或者密码错误')
           }
         }
@@ -89,7 +90,7 @@ export default {
     },
     doLoginOut () {
       this.userSession.isLogin = false
-      window.sessionStorage.removeItem('userSession')
+      window.localStorage.removeItem('userSession')
       this.$http.get('/loginOut', []).then((res) => {
         if (res.data.gridData) {
           window.message.success('login out success!')

@@ -10,10 +10,12 @@ func init () {
 	connectRedis()
 }
 
+var Redis *redis.Client
+
 func connectRedis () {
-	rds := redis.NewClient(&redis.Options{
+	Redis = redis.NewClient(&redis.Options{
 		Addr:     "192.168.149.128:6379",
 	})
-	_, err := rds.Ping().Result()
-	fmt.Println(err)
+	pong, err := Redis.Ping().Result()
+	fmt.Println(pong, err)
 }

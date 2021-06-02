@@ -29,6 +29,7 @@ func PostLogin (request map[string]interface{}, session *sessions.Session) inter
 	if len(model) > 0 && strings.EqualFold(config.Md5MixEncryption(pwd.(string)), model[0].Pwd) {
 		session.Set("userName", model[0].UserId)
 		session.Set("isLogin", true)
+		config.Redis.Set(model[0].UserId, model[0].UserId, time.Hour * 24)
 		userSession["isLogin"] = true
 	} else {
 		userSession["isLogin"] = false

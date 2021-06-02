@@ -14,14 +14,17 @@
 <script>
 export default {
   beforeMount () {
-    if (window.sessionStorage.getItem('userSession')) {
-      this.$store.state.userSession = JSON.parse(window.sessionStorage.getItem('userSession'))
-      console.log(this.$store.state.userSession.isLogin)
+    const userSession = window.localStorage.getItem('userSession')
+    if (userSession) {
+      this.$http.post('/checkLoginStatus', JSON.parse(userSession)).then((res) => {
+        if (res.data.active && res.data.active === true) {
+          this.$store.state.userSession = JSON.parse(userSession)
+          console.log(this.$store.state.userSession.isLogin)
+        }
+      })
     }
     this.$http.get('/msg').then((res) => {
       window.messageString = res.data
-      // window.sessionStorage.setItem('messageString', JSON.stringify(res.data))
-      //
     })
   },
   setup () {

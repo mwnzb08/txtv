@@ -39,6 +39,16 @@ func (c *LoginController) PostLogin() interface{} {
 	}
 	return render
 }
+
+// check user until login in
+func (c *LoginController) PostCheckLoginStatus () interface{} {
+	request = config.GetJson(c.Ctx)
+	if _, err := config.Redis.Get(request["user_id"].(string)).Result(); err != nil {
+		return true
+	}
+	return false
+}
+
 // user login out
 func (c *LoginController) GetLoginOut () interface{} {
 	c.Session.Clear()

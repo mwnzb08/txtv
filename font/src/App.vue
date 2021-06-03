@@ -17,9 +17,10 @@ export default {
     const userSession = window.localStorage.getItem('userSession')
     if (userSession) {
       this.$http.post('/checkLoginStatus', JSON.parse(userSession)).then((res) => {
-        if (res.data.active && res.data.active === true) {
+        if (res.data) {
           this.$store.state.userSession = JSON.parse(userSession)
-          console.log(this.$store.state.userSession.isLogin)
+        } else {
+          window.localStorage.removeItem('userSession')
         }
       })
     }
